@@ -19,8 +19,12 @@ app.post("/profiles", async (req, res) => {
 
 // GET API
 app.get("/profiles", async (req, res) => {
-  const profiles = await Profile.findAll();
-  res.json(profiles);
+  try {
+    const profiles = await Profile.findAll();
+    res.json(profiles);
+  } catch (err) {
+    res.status(500).json({ error: err.message, details: err });
+  }
 });
 // Root Test Route
 app.get("/", (req, res) => {

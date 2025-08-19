@@ -1,4 +1,3 @@
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   try {
 
@@ -8,7 +7,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       // require at least 3 links
       if (rawLinks.length < 3) {
         console.warn("background: need at least 3 valid LinkedIn links. Got:", rawLinks.length);
-        // Optionally notify popup (not implemented here)
+       
         return;
       }
 

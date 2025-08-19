@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>LinkedIn Auto Interaction</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 15px; }
+      input { margin: 5px 0; padding: 8px; width: 150%; }
+      button { padding: 10px; width: 100%; margin-top: 10px; }
+      button:disabled { background: #ccc; cursor: not-allowed; }
+    </style>
+  </head>
   <body>
-    <h3>LinkedIn Scraper</h3>
-    <textarea id="links" placeholder="Enter LinkedIn profile URLs (comma separated)" style="width:300px;height:100px;"></textarea>
-    <br><br>
-    <button id="start">Start</button>
+    <h3>LinkedIn Auto Interaction</h3>
+    <input type="number" id="likeCount" placeholder="Enter Like Count" />
+    <input type="number" id="commentCount" placeholder="Enter Comment Count" />
+    <button id="startBtn" disabled>Start Interaction</button>
+
     <script src="popup.js"></script>
   </body>
 </html>

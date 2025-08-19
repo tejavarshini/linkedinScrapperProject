@@ -1,4 +1,3 @@
-
 (function () {
 
   if (window.__linkedin_scraper_ran) {

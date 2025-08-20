@@ -3,17 +3,97 @@
   <head>
     <title>LinkedIn Auto Interaction</title>
     <style>
-      body { font-family: Arial, sans-serif; padding: 15px; }
-      input { margin: 5px 0; padding: 8px; width: 150%; }
-      button { padding: 10px; width: 100%; margin-top: 10px; }
-      button:disabled { background: #ccc; cursor: not-allowed; }
+      body {
+        font-family: Arial, sans-serif;
+        width: 280px;
+        padding: 20px;
+        margin: 0;
+        background: #f8f9fa;
+      }
+
+      h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 18px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+        font-size: 14px;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      input[type="number"]:focus {
+        outline: none;
+        border-color: #0a66c2;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #0a66c2;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button:hover:not(:disabled) {
+        background: #004182;
+      }
+
+      button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      .stats {
+        margin-top: 15px;
+        padding: 10px;
+        background: white;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+      }
     </style>
   </head>
   <body>
-    <h3>LinkedIn Auto Interaction</h3>
-    <input type="number" id="likeCount" placeholder="Enter Like Count" />
-    <input type="number" id="commentCount" placeholder="Enter Comment Count" />
+    <h2>LinkedIn Auto Interaction</h2>
+    
+    <div class="form-group">
+      <label for="likeCount">Number of Likes:</label>
+      <input type="number" id="likeCount" placeholder="Enter like count" min="0" max="50" />
+    </div>
+
+    <div class="form-group">
+      <label for="commentCount">Number of Comments:</label>
+      <input type="number" id="commentCount" placeholder="Enter comment count" min="0" max="20" />
+    </div>
+
     <button id="startBtn" disabled>Start Interaction</button>
+
+    <div class="stats">
+      Likes: <span id="likesProcessed">0</span> | Comments: <span id="commentsProcessed">0</span>
+    </div>
 
     <script src="popup.js"></script>
   </body>

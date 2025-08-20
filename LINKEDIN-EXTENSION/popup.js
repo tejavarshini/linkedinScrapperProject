@@ -2,20 +2,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const likeInput = document.getElementById("likeCount");
   const commentInput = document.getElementById("commentCount");
   const startBtn = document.getElementById("startBtn");
+  const likesProcessedSpan = document.getElementById("likesProcessed");
+  const commentsProcessedSpan = document.getElementById("commentsProcessed");
 
-  // Enable/disable start button
+  // Enable/disable start button based on inputs
   function checkInputs() {
-    startBtn.disabled = !(likeInput.value && commentInput.value);
+    const likeValue = parseInt(likeInput.value) || 0;
+    const commentValue = parseInt(commentInput.value) || 0;
+    startBtn.disabled = likeValue === 0 && commentValue === 0;
   }
+
   likeInput.addEventListener("input", checkInputs);
   commentInput.addEventListener("input", checkInputs);
 
   // Start button
   startBtn.addEventListener("click", () => {
+    const likeCount = parseInt(likeInput.value) || 0;
+    const commentCount = parseInt(commentInput.value) || 0;
+
+    if (likeCount === 0 && commentCount === 0) {
+      alert('Please enter at least one like or comment count');
+      return;
+    }
+
+    // Update button state
+    startBtn.disabled = true;
+    startBtn.textContent = 'Processing...';
+
     chrome.tabs.create({ url: "https://www.linkedin.com/feed/" }, (tab) => {
       chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        args: [parseInt(likeInput.value), parseInt(commentInput.value)],
+        args: [likeCount, commentCount],
         func: async (likeCount, commentCount) => {
 
           const sleep = ms => new Promise(res => setTimeout(res, ms));
@@ -136,6 +153,23 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log(`Done: Liked ${likeDone} posts, commented on ${commentDone} posts.`);
           alert(`Done: Liked ${likeDone} posts, commented on ${commentDone} posts.`);
         }
+      }).then(() => {
+        // Update stats
+        likesProcessedSpan.textContent = likeCount;
+        commentsProcessedSpan.textContent = commentCount;
+
+        // Reset button
+        startBtn.disabled = false;
+        startBtn.textContent = 'Start Interaction';
+        checkInputs();
+      }).catch((error) => {
+        console.error('Error:', error);
+        alert('Error occurred. Please try again.');
+        
+        // Reset button on error
+        startBtn.disabled = false;
+        startBtn.textContent = 'Start Interaction';
+        checkInputs();
       });
     });
   });
